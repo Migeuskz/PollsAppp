@@ -1,7 +1,15 @@
-<h1>encuetas</h1>
+{% extends 'base.html' %}
 
-<ul>
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+  <h1>encuetas</h1>
+
+  <ul>
     {% for q in questions %}
-        <li><a href="{% url 'poll:vote' q.id %}">{{ q }}</a></li>
+      <li>
+        <a href="{% url 'poll:vote' q.id %}">{{ q }}</a>
+      </li>
     {% endfor %}
-</ul>
+  </ul>
+{% endblock content%}
