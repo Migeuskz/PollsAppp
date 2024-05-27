@@ -17,3 +17,7 @@ body{
 ul li{
     list-style: none;
 }
+
+.formulario{
+    border: solid red;
+}
