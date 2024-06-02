@@ -1,17 +1,55 @@
-{%extends 'base.html'%}
+{% extends 'base.html' %}
 
-{% block title %}Resultados{% endblock title %}
+{% block title %}
+  Resultados
+{% endblock %}
 
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <h1>{{ question.question_text }}</h1>
 
-<h1>{{question.question_text}}</h1>
-
-<ul>
+  <ul>
     {% for c in question.choice_set.all %}
-    <li>{{c.choice_text}} - {{c.votes}} voto{{c.votes | pluralize}}</li>
+      <li>{{ c.choice_text }} - {{ c.votes }} voto{{ c.votes|pluralize }}</li>
     {% endfor %}
-</ul>
-<hr>
-<a href="{% url 'poll:home'%}">Encuestas</a>
+  </ul>
+  <hr />
+  <a href="{% url 'poll:home' %}">Encuestas</a>
+  <div style="width: 400px; height: 400px; margin: 0 auto;">
+    <canvas id="myChart"></canvas>
+  </div>
 
-{% endblock content %}
+
+  {% block chart %}
+
+
+    <script>
+      let jsonInfo = JSON.parse('{{info|escapejs}}')
+      var Jsonlabels = jsonInfo.labels
+      var Jsondata = jsonInfo.data
+
+
+      const ctx = document.getElementById('myChart');
+
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: Jsonlabels,
+            datasets: [{
+                label: '# de votos',
+                data: Jsondata,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+  </script>
+
+  {% endblock %}
+{% endblock %}

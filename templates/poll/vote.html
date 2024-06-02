@@ -4,8 +4,18 @@
   Vota
 {% endblock title %}
 
+
 {% block content %}
 <h1>{{ question.question_text }}</h1>
+
+
+{% if error_message %}
+<div class="alert">
+  <p>{{error_message}}</p>
+</div>
+  
+{% endif %}
+  
 
 <ul>
     <h2>Elige bien</h2>
@@ -21,6 +31,9 @@
     </form>
 </ul>
 {% endblock content %}
+
+{% block chart %}
+{% endblock chart %}
 
 
 
